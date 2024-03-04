@@ -59,7 +59,10 @@ ROOT_URLCONF = 'MyStore.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / "templates",
+            BASE_DIR / "media"
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -149,3 +152,6 @@ CORS_ALLOWED_ORIGINS = [
 AUTH_SECRET_KEY = "fdjfhdskjfhdsj4fe45fe5few@#%$gjdskg"
 AUTH_EXPIRATION = 30
 AUTH_ALGORITHM = "HS512"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "products_img"

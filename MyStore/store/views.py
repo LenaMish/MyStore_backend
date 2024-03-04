@@ -12,7 +12,9 @@ from rest_framework.views import APIView
 import jwt
 from datetime import datetime, timedelta
 from .authentication import JwtAuthentication
-from .serializers import UserCreateSerializer, UserListSerializer, UserUpdateSerializer, UserAuthSerializer, ProductSerializer
+from .models import Product
+from .serializers import UserCreateSerializer, UserListSerializer, UserUpdateSerializer, UserAuthSerializer, \
+    ProductSerializer, ProductDetailsSerializer
 from django.conf import settings
 
 
@@ -91,5 +93,10 @@ class AuthAPIView(APIView):
 
 class ProductCreateApiView(CreateAPIView):
     permission_classes = [IsAuthenticated]
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+
+class ProductListApiView(ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductDetailsSerializer

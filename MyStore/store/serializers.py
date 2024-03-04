@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from .validators import validate_unique_username
-from .models import Product
+from .models import Product, ProductVariant
 
 
 class UserCreateSerializer(serializers.Serializer):
@@ -47,3 +47,31 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = '__all__'
+
+
+class ProductListSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField("get_filename")
+
+    class Meta:
+        model = Product
+        exclude = ["description"]
+
+    def get_filename(self, obj):
+        return obj.image.name.lstrip("items_img/")
+
+
+class ProductDetailsSerializer(serializers.ModelSerializer):
+    class ProductVariantSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = ProductVariant
+            fields = ["id", "color", "size", "price"]
+
+    image = serializers.SerializerMethodField("get_filename")
+    variants = ProductVariantSerializer(many=True)
+
+    class Meta:
+        model = Product
+        fields = "__all__"
+
+    def get_filename(self, obj):
+        return obj.image.name
