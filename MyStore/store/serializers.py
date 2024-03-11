@@ -56,7 +56,12 @@ class ProductListSerializer(serializers.ModelSerializer):
         model = Product
         exclude = ["description"]
 
-    def get_filename(self, obj):
+    def get_filename(self, obj) -> str:
+        """
+        Get product's filename from path
+        :param obj: Product object
+        :return: filename
+        """
         return obj.image.name.lstrip("items_img/")
 
 

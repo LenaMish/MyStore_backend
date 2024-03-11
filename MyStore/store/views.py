@@ -27,6 +27,13 @@ class RegisterAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
 
     def post(self, request, *args, **kwargs):
+        """
+
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
         response = super().post(request, *args, **kwargs)
         if response.status_code == status.HTTP_201_CREATED:
             return Response(data={"message": "created"}, status=response.status_code)
@@ -100,3 +107,22 @@ class ProductCreateApiView(CreateAPIView):
 class ProductListApiView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductDetailsSerializer
+
+
+
+
+# def my_view(request, slug):
+#     """
+#     Display an individual :model:`myapp.MyModel`.
+#
+#     **Context**
+#
+#     ``mymodel``
+#         An instance of :model:`myapp.MyModel`.
+#
+#     **Template:**
+#
+#     :template:`myapp/my_template.html`
+#     """
+#     context = {"mymodel": MyModel.objects.get(slug=slug)}
+#     return render(request, "myapp/my_template.html", context)
